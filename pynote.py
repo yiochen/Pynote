@@ -2,7 +2,21 @@
 import sqlite3
 import types
 import os
+import json
 from debug import *
+
+
+def eraseFile(file):
+    """erase all content in a file, move the read write head to beginning"""
+    try:
+        if file.closed:
+            perror("file closed, cannot be opened")
+        else:
+            file.seek(0)
+            file.truncate()
+    except IOError:
+        perror("Cannot erase the file content")
+
 
 # format of config
 # name and value seperated by :
@@ -10,14 +24,19 @@ from debug import *
 if __name__ == "__main__":
     """Create a new config file if not exist"""
     initDebug(VERBOSE)
-    config = {"path":"./notebase.db"}
+    config = {}
     try:
         configfile=None
         configfile = open("./pynoteConfig.info", "r+")
+        pdebug(configfile)
         getKey = lambda line: line.split("#")[0] or "emptykey"
         getVal = lambda line: line.split("#")[1] or "none"
         pdebug(config)
-        config.update({getKey(line):getVal(line) for line in configfile.readlines()})
+        pdebug(configfile)
+        text=configfile.read()
+        pdebug(text)
+        config=json.loads(text)
+        # config.update({getKey(line):getVal(line) for line in configfile.readlines()})
         pdebug(config)
     except IOError:
         print "Configfile reading error, creating default config file at current directory"
@@ -26,14 +45,17 @@ if __name__ == "__main__":
             configfile.close()
         # create a config file in cwd
         configfile = open("./pynoteConfig.info", "w")
-        configfile.write("\n".join(["%s#%s"%(key, str(value)) for key, value in config.items()]))
+        config={"notebooks":[]}
+        configfile.write(json.dumps(config))
 
-    if config["path"] is None:
+    #if notebooks list is empty
+    if not config["notebooks"]:
         # the config file doesn't contain information about the database
+        name = raw_input("Enter the name of the database")
         path = raw_input("Enter the path of the database, will create one if not exist: ")
-        configfile.seek(0,2) #move to the end of the file
-        configfile.write("path#%s\n" % path)
-        config["path"]=path
-    # finished reading and updating the config file, closing it
+        eraseFile(configfile)
+        config["notebooks"].append({"name":name,"path":os.path.abspath(path)})
+        configfile.write(json.dumps(config))
+
     configfile.close()
-    pinfo("closed config file, the path is %s"%(config["path"],))
+    pinfo("closed config file")
