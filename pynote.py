@@ -1,5 +1,4 @@
 """A small python 2.7 application for a CLI notebook"""
-import sqlite3
 import types
 import os
 import json
@@ -26,6 +25,7 @@ if __name__ == "__main__":
     initDebug(VERBOSE)
     config = {}
     try:
+        #try open and read the config file
         configfile=None
         configfile = open("./pynoteConfig.info", "r+")
         pdebug(configfile)
@@ -36,8 +36,6 @@ if __name__ == "__main__":
         text=configfile.read()
         pdebug(text)
         config=json.loads(text)
-        # config.update({getKey(line):getVal(line) for line in configfile.readlines()})
-        pdebug(config)
     except IOError:
         print "Configfile reading error, creating default config file at current directory"
         if configfile.__class__ == types.FileType:
@@ -51,10 +49,10 @@ if __name__ == "__main__":
     #if notebooks list is empty
     if not config["notebooks"]:
         # the config file doesn't contain information about the database
-        name = raw_input("Enter the name of the database")
+        name = raw_input("Enter the name of the database: ")
         path = raw_input("Enter the path of the database, will create one if not exist: ")
         eraseFile(configfile)
-        config["notebooks"].append({"name":name,"path":os.path.abspath(path)})
+        config["notebooks"].append({"name":name,"path":os.path.abspath(os.path.join(path,name))})
         configfile.write(json.dumps(config))
 
     configfile.close()
