@@ -38,12 +38,36 @@ def saveNote(conn,note,tags=[]):
     return the id of the last inserted note
     """
     id=conn.execute("INSERT INTO 'NOTES'('note','date') VALUES (?,?);",(note,datetime.now())).lastrowid
+    tags=list(set(tags)) #remove duplicate tags
     for tag in tags:
         conn.execute("INSERT INTO 'TAGS'('name','note_id') VALUES (?,?);",(tag,id))
     conn.commit()
 
+def getTagsById(conn, id):
+    return conn.execute("SELECT name from TAGS WHERE note_id=?;",(id,)).fetchall()
+
+def getNoteById(conn, id):
+    result=conn.execute("SELECT id, note, date FROM NOTES WHERE id=?",(id,)).fetchone()
+    return (result[0],result[1],result[2],getTagsById(conn,result[0]))
+
 def getAllNotes(conn):
     """return all the notes in a list"""
     results=conn.execute("SELECT note, id, date FROM NOTES;").fetchall()
-    getTags=lambda id: conn.execute("SELECT name from TAGS WHERE note_id=?;",(id,)).fetchall()
-    return [(id,note, date, getTags(id)) for note, id,date in results]
+    # getTags=lambda id: conn.execute("SELECT name from TAGS WHERE note_id=?;",(id,)).fetchall()
+    return [(id,note, date, getTagsById(conn,id)) for note, id,date in results]
+
+def deleteNote(conn, id):
+    """delete the note specified by the id"""
+    conn.execute("DELETE FROM NOTES WHERE id=?;",(id,))
+    conn.execute("DELETE FROM TAGS WHERE note_id=?;",(id,))
+    conn.commit()
+
+def removeTag(conn, id, tag):
+    """remove a tag of a note"""
+    conn.execute("DELETE FROM TAGS WHERE note_id=? AND name=?;",(id, tag))
+    conn.commit()
+
+def getNotesByTag(conn,tag):
+    """get all the notes having this tag"""
+    results=conn.execute("SELECT DISTINCT note_id FROM TAGS WHERE name=?;",(tag,)).fetchall()
+    return [getNoteById(conn,row[0]) for row in results]
