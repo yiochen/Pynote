@@ -9,18 +9,16 @@ absolute path for the notebooks in the system, the first one being the directory
 of the default notebook.  
 ## Usage  
 
-    python pynote.py [-n|s path] [message]
+    python pynote.py [-n|s notebook] [message]
 
 #### • parameters  
-__-n path__ This will create a __n__ew notebook in the given path  
+__-n notebook__ This will create a **n**ew notebook in the given path. The name of the file will be used as the name of the notebook. Notebook names should be unique for all the notebooks in the system.  
 example:
 
     python pynote.py -n /user/new_notebook
 
-__-s path__ This will __s__elect a notebook for inserting the note  
-> **Note** You can specify absolute path or relative path -c and -s. In
-Windows and Unix, you can use "." to represent current directory, ".." to
-represent parent directory.  
+__-s notebook__ This will **s**elect a notebook for inserting the note  
+> **Note** You only need to specify the name of the notebook when you use -s. But specifying the path to the notebook will work too. Error will be reported if the notebook cannot be found.  
 
 __message__ If message is given as parameter, then the message will be saved to a chosen notebook, and the program will exit. If message is empty, you will enter interactive mode, in which you can do more advanced stuff other than inserting notes.    
 
