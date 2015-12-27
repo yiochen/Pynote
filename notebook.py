@@ -1,4 +1,7 @@
 """Provide functionalities for high level notebook access"""
+
+from dbmanager import *
+
 def getNotebook(path):
     """Open or create a notebook at the given path"""
     pass #for now
@@ -15,4 +18,21 @@ class Notebook:
     Instead, you should use getNotebook function which will check the existance
     of the notebook file in the system.
     """
-    pass #for now
+    def __init__(self, conn):
+        self.dbconn=conn
+        self.buffer=""
+        self.tagBuff=[]
+
+    def write(self, line):
+        self.buffer+=(str(line)+"\n")
+
+    def addTag(self, tag):
+        """add tags to the current note, you can pass in a single string or a list of strings"""
+        pass
+
+    def commit(self):
+        """flush the note into notebook"""
+        pass
+
+    def __rep__(self):
+        pass
