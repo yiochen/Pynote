@@ -3,6 +3,8 @@ import types
 import os
 import json
 from debug import *
+from notebook import *
+
 
 
 def eraseFile(file):
@@ -31,8 +33,6 @@ if __name__ == "__main__":
         pdebug(configfile)
         getKey = lambda line: line.split("#")[0] or "emptykey"
         getVal = lambda line: line.split("#")[1] or "none"
-        pdebug(config)
-        pdebug(configfile)
         text=configfile.read()
         pdebug(text)
         config=json.loads(text)
@@ -52,8 +52,18 @@ if __name__ == "__main__":
         name = raw_input("Enter the name of the database: ")
         path = raw_input("Enter the path of the database, will create one if not exist: ")
         eraseFile(configfile)
-        config["notebooks"].append({"name":name,"path":os.path.abspath(os.path.join(path,name))})
+        notepath=os.path.abspath(os.path.join(path,name))
+        config["notebooks"].append({"name":name,"path":notepath})
+        pinfo("the new notebook is called %s at %s"%(name, notepath))
         configfile.write(json.dumps(config))
 
     configfile.close()
     pinfo("closed config file")
+    pinfo("openning database")
+    notebook=Notebook(getNotebook(config["notebooks"][0]["path"]))
+    note=raw_input("enter your note: ")
+    tag=raw_input("enter tags, seperated by space: ")
+    notebook.write(note)
+    notebook.addTag(tag.split())
+    notebook.commit()
+    notebook.close()

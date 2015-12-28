@@ -1,10 +1,10 @@
 """Provide functionalities for high level notebook access"""
-
+import os
 from dbmanager import *
 
 def getNotebook(path):
     """Open or create a notebook at the given path"""
-    pass #for now
+    return openNotebook(os.path.abspath(path))
 
 def notebookExist(path):
     """check if the notebook exist in the file system"""
@@ -28,11 +28,24 @@ class Notebook:
 
     def addTag(self, tag):
         """add tags to the current note, you can pass in a single string or a list of strings"""
-        pass
+        if type(tag) is str:
+            self.tagBuff+=[tag]
+        else:
+            if type(tag) is list:
+                self.tagBuff+=tag
+            else:
+                perror("Error processing tag, the argument must be a string or a list of strings")
 
     def commit(self):
         """flush the note into notebook"""
-        pass
+        saveNote(self.dbconn, self.buffer, self.tagBuff)
+        self.buffer=""
+        self.tagBuff=[]
 
+    def close(self):
+        self.dbconn.close()
+        
     def __rep__(self):
+        results=getAllNotes(conn)
+        return "\n".join(results)
         pass
