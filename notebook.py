@@ -1,6 +1,7 @@
 """Provide functionalities for high level notebook access"""
 import os
 from dbmanager import *
+from debug import *
 
 def getNotebook(path):
     """Open or create a notebook at the given path"""
@@ -38,13 +39,15 @@ class Notebook:
 
     def commit(self):
         """flush the note into notebook"""
-        saveNote(self.dbconn, self.buffer, self.tagBuff)
+        if self.buffer:
+            saveNote(self.dbconn, self.buffer, self.tagBuff)
+            pinfo("Successfully saved note")
         self.buffer=""
         self.tagBuff=[]
 
     def close(self):
         self.dbconn.close()
-        
+
     def __rep__(self):
         results=getAllNotes(conn)
         return "\n".join(results)
