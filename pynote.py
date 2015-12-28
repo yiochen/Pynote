@@ -1,6 +1,7 @@
 """A small python 2.7 application for a CLI notebook"""
 import types
 import os
+import argparse
 import json
 from debug import *
 from notebook import *
@@ -18,13 +19,22 @@ def eraseFile(file):
     except IOError:
         perror("Cannot erase the file content")
 
+def initArgs():
+    parser=argparse.ArgumentParser()
+    group=parser.add_mutually_exclusive_group()
+    group.add_argument("-n","--new",help="Create a new notebook at the path, filename will be used as notebook name")
+    group.add_argument("-s","--select",help="Select a notebook to open by specifying notebook name")
+    parser.add_argument("note",nargs="*", help="Your note content")
+    parser.add_argument("-t","--tag", nargs="*", help="Tag your note, end with --")
+    return parser
 
 # format of config
 # name and value seperated by :
 # each parameter in a line
 if __name__ == "__main__":
     """Create a new config file if not exist"""
-    initDebug(VERBOSE)
+    initArgs()
+    parser=initDebug(VERBOSE)
     config = {}
     try:
         #try open and read the config file
