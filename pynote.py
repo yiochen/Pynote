@@ -48,6 +48,7 @@ if __name__ == "__main__":
     pdebug(parser)
     initDebug(VERBOSE)
     config = {"notebooks":[]}
+    notepath=""
     __CONFIG_PATH=os.path.expanduser(__CONFIG_PATH)
     try:
         configfile=None
