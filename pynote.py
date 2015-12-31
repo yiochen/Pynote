@@ -15,6 +15,7 @@ def initArgs():
     group.add_argument("-s","--select",help="Select a notebook to open by specifying notebook name")
     parser.add_argument("note",nargs="*", help="Your note content")
     parser.add_argument("-t","--tag", nargs="*", help="Tag your note, end with --")
+    parser.add_argument("-l","--list",nargs="*", help="List the notes in the notebooks or list all the notebooks")
     return parser.parse_args()
 
 # format of config
@@ -63,6 +64,24 @@ if __name__ == "__main__":
         if not notepath:
             perror("The notebook named %s doesn't exist"%parser.select)
             quit()
+
+    if parser.list is not None:
+        if parser.list:
+            #listing all the notes in the specified notebooks
+            for tempnotebookname in parser.list:
+                if config[tempnotebookname]:
+                    print "-----%s-----"%(tempnotebookname,)
+                else:
+                    print "%s doesn't exist"%(tempnotebookname,)
+                    continue
+
+                tempnotebook=getNotebook(config[tempnotebookname])
+                tempnotebook.printAllNotes()
+                del tempnotebook
+        else:
+            #listing all the notebooks
+            config.printAllNotebooks()
+
 
     if not notepath:
         # user doesn't specify which notebook to use, use the default notebook

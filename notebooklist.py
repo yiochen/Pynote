@@ -63,10 +63,16 @@ class NotebookList:
         except (IOError, ValueError):
             perror("Cannot erase the file content")
 
+    def printAllNotebooks(self):
+        if self.config["notebooks"]:
+            print "\n".join(["%s %s"%(item["name"].ljust(10),item["path"]) for item in self.config["notebooks"]])
+        else:
+            print "There is no notebooks"
+
     def __getitem__(self, key):
         result=[item for item in self.config["notebooks"] if item["name"]==key]
         if len(result)>0:
-            return result[0]
+            return result[0]["path"]
         else:
             return None
 

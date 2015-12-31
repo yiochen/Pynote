@@ -8,10 +8,6 @@ def getNotebook(path):
     """Open or create a notebook at the given path"""
     return Notebook(openNotebook(formatPath(path)))
 
-def notebookExist(path):
-    """check if the notebook exist in the file system"""
-    pass #for now
-
 class Notebook:
     """Class that encapsulates sqlite database for a notebook,
     providing high level functionalities for notebook access.
@@ -46,7 +42,16 @@ class Notebook:
         self.buffer=""
         self.tagBuff=[]
 
-    def close(self):
+    def printAllNotes(self):
+        results=getAllNotes(self.dbconn)
+        if results:
+            print "\n\n".join([
+            "%s\n%s\n%s"%(str(item[2]),str(item[1])," ".join([str(tag[0]) for tag in item[3]]))
+             for item in results])
+        else:
+            print "No notes saved in this notebook"
+
+    def __close(self):
         self.dbconn.close()
 
     def __rep__(self):
@@ -54,4 +59,4 @@ class Notebook:
         return "\n".join(results)
 
     def __del__(self):
-        self.close()
+        self.__close()

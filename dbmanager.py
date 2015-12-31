@@ -13,7 +13,7 @@ def openNotebook(path):
     try:
         conn=sqlite3.connect(path, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
     except sqlite3.OperationalError:
-        perror("Error connecting the notebook database")
+        perror("Error connecting the notebook database at %s"%(path,))
         quit()
 
 
