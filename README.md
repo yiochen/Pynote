@@ -20,7 +20,7 @@ example:
 __-s --select notebook__ This will **s**elect a notebook for inserting the note  
 > **Note** You only need to specify the name of the notebook when you use -s. But specifying the path to the notebook will work too. Error will be reported if the notebook cannot be found.  
 
-__message__ If message is given as parameter, then the message will be saved to a chosen notebook, and the program will exit. If message is empty, you will enter interactive mode, in which you can do more advanced stuff other than inserting notes.    
+[//]: # ( __message__ If message is given as parameter, then the message will be saved to a chosen notebook, and the program will exit. If message is empty, you will enter interactive mode, in which you can do more advanced stuff other than inserting notes.  )
 
 > **Note** If -n and -s are not used, but __message__ is present, note will be saved in the default notebook, otherwise, it will be saved in the selected notebook.
 
@@ -56,7 +56,7 @@ You may run the program after you pull it from this directory using
 But if you want to save some typing and run it as a custom command, it is actually very easy to do. You just need to make a alias.  
 On Linux, do  
 
-    $ echo "alias pynote='python <path_to_pynote.py>/pynote.py'"" >> ~/.bash_aliases
+    $ echo "alias pynote='python <path_to_pynote.py>/pynote.py'" >> ~/.bash_aliases
 
  you should change the <path_to_pynote> to the absolute path of the repository directory. After that, restart the terminal and you will be able to do something like
 
