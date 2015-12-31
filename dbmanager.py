@@ -1,6 +1,7 @@
 """This module contain some low level database access"""
 import sqlite3
 from datetime import date, datetime
+from debug import *
 
 def openNotebook(path):
     """
@@ -9,7 +10,13 @@ def openNotebook(path):
     create a sqlite file at the path
     return the sqlite3 connection object
     """
-    conn=sqlite3.connect(path, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
+    try:
+        conn=sqlite3.connect(path, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
+    except sqlite3.OperationalError:
+        perror("Error connecting the notebook database")
+        quit()
+
+
     c=conn.cursor()
     # create NOTES table
     c.execute('''CREATE TABLE  IF NOT EXISTS `NOTES` (

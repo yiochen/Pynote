@@ -2,10 +2,11 @@
 import os
 from dbmanager import *
 from debug import *
+from clitool import *
 
 def getNotebook(path):
     """Open or create a notebook at the given path"""
-    return openNotebook(os.path.abspath(path))
+    return Notebook(openNotebook(formatPath(path)))
 
 def notebookExist(path):
     """check if the notebook exist in the file system"""
@@ -51,4 +52,6 @@ class Notebook:
     def __rep__(self):
         results=getAllNotes(conn)
         return "\n".join(results)
-        pass
+
+    def __del__(self):
+        self.close()
