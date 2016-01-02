@@ -3,10 +3,10 @@ import types
 import os
 import argparse
 import json
-from debug import *
-from notebook import *
-from notebooklist import *
-from clitool import *
+from pynote.debug import *
+from pynote.notebook import *
+from pynote.notebooklist import *
+from pynote.clitool import *
 
 def initArgs():
     parser=argparse.ArgumentParser()
