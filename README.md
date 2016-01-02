@@ -48,16 +48,11 @@ If the __*pynoteConfig.info*__ cannot be found under user's home directory, it w
         ]
     }
 
-## How to use it as a custom command  
-You may run the program after you pull it from this directory using
+## How to install it as a command line tool
+Just execute this install script under superuser mode. For example in ubuntu
 
-    $ python <path to pynote.py>/pynote.py [arguments]
+    $ sudo ./install
 
-But if you want to save some typing and run it as a custom command, it is actually very easy to do. You just need to make a alias.  
-On Linux, do  
+Then you can run it like
 
-    $ echo "alias pynote='python <path_to_pynote.py>/pynote.py'" >> ~/.bash_aliases
-
- you should change the <path_to_pynote> to the absolute path of the repository directory. After that, restart the terminal and you will be able to do something like
-
-    $ pynote See, I can just run pynote -t alias "custom command"
+    $ pynote -n ./mynotebook This is my first note.

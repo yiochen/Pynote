@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+install_path="/usr/local/"
+python_path=$(which python)
+
+# copy source code to /usr/local/src
+mkdir ${install_path}src/Pynote
+cp -r pynote/ ${install_path}src/Pynote/pynote
+
+# make some change to main file, and make the file executable
+cp pynote.py main
+sed -i "1 i #!${python_path}" main
+chmod 755 main
+
+# make it symbolic link to the executable
+mv main ${install_path}src/Pynote/
+ln -s ${install_path}src/Pynote/main ${install_path}bin/pynote
