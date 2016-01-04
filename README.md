@@ -77,4 +77,4 @@ Installing on Windows requires a little more work. You would need to convert the
  at project root directory. A folder called "dist" will be generated. You can go ahead and add it to path variable.
 
  [py2exe]:  http://www.py2exe.org/
- [windows release]: #
+ [windows release]: https://github.com/yiochen/Pynote/releases
