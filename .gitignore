@@ -3,3 +3,6 @@
 pynoteConfig.info
 db/
 testdb
+/build
+/dist
+
