@@ -14,7 +14,6 @@ class NotebookList:
     __CONFIG_PATH="~/pynoteConfig.info"
 
     def __init__(self):
-        initDebug(VERBOSE)
         self.__configfilepath=formatPath(NotebookList._NotebookList__CONFIG_PATH)
         pdebug("config file path is %s"%(self.__configfilepath,))
         self.configfile=None

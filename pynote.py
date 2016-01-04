@@ -16,6 +16,7 @@ def initArgs():
     parser.add_argument("note",nargs="*", help="Your note content")
     parser.add_argument("-t","--tag", nargs="*", help="Tag your note, end with --")
     parser.add_argument("-l","--list",nargs="*", help="List the notes in the notebooks or list all the notebooks")
+    parser.add_argument("-d","--debug",help=argparse.SUPPRESS,action="store_true")
     return parser.parse_args()
 
 # format of config
@@ -24,7 +25,8 @@ def initArgs():
 if __name__ == "__main__":
     parser=initArgs()
     pdebug(parser)
-    initDebug(VERBOSE)
+    if parser.debug:
+        initDebug(VERBOSE)
     config = NotebookList()
     notepath=""
 

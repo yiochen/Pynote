@@ -45,6 +45,9 @@ example:
 
 __-l --list notebook__ List all the notes in the notebook. If notebook is not specified, list all the notebooks  
 
+#### • hidden argument  
+__-d --debug__ This will turn on verbose printing. It's not meant for end users.   
+
 #### • configuration file
 If the __*pynoteConfig.info*__ cannot be found under user's home directory, it will create one. If default notebook is not specified, user will be prompt to enter the path to create a notebook. Notebooks are actually sqlite3 database with predefined column names. It is not advised to edit the configuration file directly, however following is the format of it for development purpose. You can see that it is in JSON format  
 
