@@ -69,8 +69,8 @@ Then you can run it like
 
     $ pynote -n ./mynotebook This is my first note.
 ### Windows  
-Installing on Windows requires a little more work. You would need to convert the python code to executable first. This is done using a program called [py2exe](py2exe). We have done the job so you can install and use it even without python installation. You can download a zip file from our [releases](windows release), unzip it, and add the path of the unzipped folder to system/user path.  
- If you want to generate the executable on you own. You can head over to [py2exe.org](py2exe), install it and run
+Installing on Windows requires a little more work. You would need to convert the python code to executable first. This is done using a program called [py2exe][py2exe]. We have done the job so you can install and use it even without python installation. You can download a zip file from our [releases][windows release], unzip it, and add the path of the unzipped folder to system/user path.  
+ If you want to generate the executable on you own. You can head over to [py2exe.org][py2exe], install it and run
 
     python setup.py py2exe
 
