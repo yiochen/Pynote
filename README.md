@@ -1,5 +1,5 @@
 #   Pynote - A Simple CLI Notebook
-This project is in the inital stage of development, it is not usable yet  
+
 ##  Overview  
 This is a simple python application for taking some quick note in terminal.
 Once called, it will look for a configuration file called __*pynoteConfig.info*__ under
